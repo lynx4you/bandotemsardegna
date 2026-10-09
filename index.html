@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voucher TEM Sardegna — fino a €60.000 per l'export della tua PMI | Touché Consulting</title>
+<meta name="description" content="La Regione Sardegna finanzia l'80% di un Temporary Export Manager, fino a €60.000 a fondo perduto. Touché Consulting affianca le PMI sarde dalla verifica di ammissibilità ai risultati sui mercati esteri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --nero:#000000;
+    --testo:#1e1c1b;
+    --rosso:#E51B24;
+    --carta:#ffffff;
+    --sabbia:#f5f4f1;
+    --grigio:#6e6862;
+    --filo:#e4e1dc;
+    --display:'Anton', 'Arial Narrow', sans-serif;
+    --corpo:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:84px}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+  body{
+    font-family:var(--corpo);
+    color:var(--testo);
+    background:var(--carta);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--carta);
+    border-bottom:1px solid var(--filo);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .nav-logo img{height:36px;width:auto}
+  .nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+  .nav-links a{
+    text-decoration:none;font-weight:600;font-size:15px;color:var(--testo);
+    padding:6px 0;border-bottom:2px solid transparent;
+  }
+  .nav-links a:hover,.nav-links a:focus-visible{border-bottom-color:var(--rosso)}
+  .nav-cta{
+    background:var(--rosso);color:#fff!important;padding:10px 18px!important;
+    border-bottom:none!important;font-weight:700;
+  }
+  .nav-cta:hover,.nav-cta:focus-visible{background:var(--nero)}
+  @media (max-width:820px){
+    .nav-links li:not(.li-cta){display:none}
+  }
+  :focus-visible{outline:3px solid var(--rosso);outline-offset:2px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:72px 0 56px;border-bottom:6px solid var(--nero)}
+  .hero-kicker{
+    font-weight:700;font-size:16px;color:var(--rosso);margin-bottom:20px;
+  }
+  h1{
+    font-family:var(--display);
+    text-transform:uppercase;
+    font-weight:400;
+    font-size:clamp(44px,7.2vw,92px);
+    line-height:.98;
+    letter-spacing:.005em;
+    color:var(--nero);
+    max-width:15ch;
+  }
+  h1 .cifra{color:var(--rosso)}
+  .hero-sub{
+    margin-top:28px;max-width:56ch;font-size:20px;line-height:1.55;
+  }
+  .hero-sub strong{font-weight:700}
+  .hero-actions{margin-top:36px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .btn{
+    display:inline-block;text-decoration:none;font-weight:700;font-size:17px;
+    padding:16px 30px;border:2px solid var(--nero);
+  }
+  .btn-rosso{background:var(--rosso);border-color:var(--rosso);color:#fff}
+  .btn-rosso:hover,.btn-rosso:focus-visible{background:var(--nero);border-color:var(--nero)}
+  .btn-nero{background:transparent;color:var(--nero)}
+  .btn-nero:hover,.btn-nero:focus-visible{background:var(--nero);color:#fff}
+  .hero-nota{margin-top:18px;font-size:14px;color:var(--grigio);max-width:60ch}
+
+  /* ---------- fascia numeri ---------- */
+  .fascia{background:var(--nero);color:#fff;padding:44px 0}
+  .fascia-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  }
+  .dato .valore{
+    font-family:var(--display);font-size:clamp(34px,4vw,52px);line-height:1;
+    text-transform:uppercase;
+  }
+  .dato .valore em{font-style:normal;color:var(--rosso)}
+  .dato .voce{margin-top:10px;font-size:15px;color:#c9c5c0;max-width:22ch}
+  @media (max-width:820px){
+    .fascia-grid{grid-template-columns:repeat(2,1fr)}
+  }
+
+  /* ---------- sezioni ---------- */
+  section{padding:80px 0}
+  .sez-testa{max-width:760px;margin-bottom:44px}
+  h2{
+    font-family:var(--display);text-transform:uppercase;font-weight:400;
+    font-size:clamp(32px,4.4vw,52px);line-height:1.04;color:var(--nero);
+  }
+  .sez-testa p{margin-top:18px;font-size:19px;line-height:1.6}
+  .marca{ /* il segno rosso del logo, ripreso come marcatore */
+    display:inline-block;width:14px;height:20px;background:var(--rosso);
+    transform:skewX(-12deg);margin-right:14px;vertical-align:baseline;
+  }
+
+  /* il bando */
+  .alt{background:var(--sabbia)}
+  .colonne{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+  @media (max-width:820px){.colonne{grid-template-columns:1fr;gap:36px}}
+  .blocco h3{
+    font-size:20px;font-weight:700;color:var(--nero);margin-bottom:10px;
+  }
+  .blocco + .blocco{margin-top:32px;padding-top:32px;border-top:1px solid var(--filo)}
+  .blocco p{max-width:58ch}
+  .blocco p + p{margin-top:12px}
+
+  .timeline{border-left:4px solid var(--nero);padding-left:28px}
+  .tappa{position:relative;padding-bottom:34px}
+  .tappa:last-child{padding-bottom:0}
+  .tappa::before{
+    content:"";position:absolute;left:-38px;top:6px;
+    width:16px;height:16px;background:var(--rosso);transform:skewX(-12deg);
+  }
+  .tappa .quando{font-weight:700;color:var(--nero)}
+  .tappa .cosa{margin-top:4px;max-width:48ch}
+
+  /* cosa fa un TEM */
+  .servizi{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:4px solid var(--nero)}
+  @media (max-width:820px){.servizi{grid-template-columns:1fr}}
+  .servizio{padding:32px 36px 32px 0;border-bottom:1px solid var(--filo)}
+  .servizio:nth-child(odd){border-right:1px solid var(--filo);}
+  @media (max-width:820px){.servizio:nth-child(odd){border-right:none}.servizio{padding-right:0}}
+  .servizio h3{font-size:21px;font-weight:700;color:var(--nero)}
+  .servizio p{margin-top:8px;max-width:52ch}
+
+  /* chi siamo */
+  .chi-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start}
+  @media (max-width:820px){.chi-grid{grid-template-columns:1fr}}
+  .chi-testo p{max-width:58ch}
+  .chi-testo p + p{margin-top:14px}
+  .principi{border:2px solid var(--nero);padding:32px}
+  .principi h3{
+    font-family:var(--display);text-transform:uppercase;font-weight:400;
+    font-size:26px;color:var(--nero);margin-bottom:18px;
+  }
+  .principi ul{list-style:none}
+  .principi li{padding-left:26px;position:relative;margin-top:14px;line-height:1.5}
+  .principi li::before{
+    content:"";position:absolute;left:0;top:7px;
+    width:11px;height:15px;background:var(--rosso);transform:skewX(-12deg);
+  }
+
+  /* form */
+  .form-sez{background:var(--nero);color:#fff}
+  .form-sez h2{color:#fff}
+  .form-sez .sez-testa p{color:#d6d2cd}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px;max-width:820px}
+  @media (max-width:680px){.form-grid{grid-template-columns:1fr}}
+  .campo{display:flex;flex-direction:column;gap:8px}
+  .campo.largo{grid-column:1 / -1}
+  .campo label{font-weight:600;font-size:15px}
+  .campo input,.campo select,.campo textarea{
+    font-family:var(--corpo);font-size:16px;color:var(--testo);
+    padding:14px;border:none;background:#fff;width:100%;
+  }
+  .campo textarea{min-height:96px;resize:vertical}
+  .consenso{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#d6d2cd;grid-column:1 / -1}
+  .consenso input{width:20px;height:20px;margin-top:2px;accent-color:var(--rosso)}
+  .form-grid .btn-rosso{border:none;cursor:pointer;font-family:var(--corpo);justify-self:start}
+  .form-esito{grid-column:1 / -1;font-weight:600;color:#fff;background:#1f1d1c;padding:14px 16px;display:none}
+  .form-esito.ok{display:block;border-left:4px solid var(--rosso)}
+  .form-esito.err{display:block;border-left:4px solid #f2b705}
+  .consenso a{color:inherit;text-decoration:underline}
+
+  /* FAQ */
+  .faq{max-width:820px}
+  .faq details{border-top:1px solid var(--filo)}
+  .faq details:last-child{border-bottom:1px solid var(--filo)}
+  .faq summary{
+    cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;
+    padding:22px 0;font-weight:700;font-size:18px;color:var(--nero);
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-family:var(--display);font-size:24px;color:var(--rosso);flex:none}
+  .faq details[open] summary::after{content:"–"}
+  .faq .risposta{padding:0 0 24px;max-width:62ch}
+  .faq .risposta p + p{margin-top:10px}
+
+  /* footer */
+  footer{background:var(--sabbia);border-top:6px solid var(--nero);padding:56px 0 40px;font-size:15px}
+  .foot-grid{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+  @media (max-width:680px){.foot-grid{grid-template-columns:1fr}}
+  .foot-grid img{height:32px;width:auto}
+  .disclaimer{color:var(--grigio);max-width:78ch;line-height:1.6}
+  .disclaimer p + p{margin-top:10px}
+  .foot-links{margin-top:18px;display:flex;gap:24px;flex-wrap:wrap}
+  .foot-links a{font-weight:600;color:var(--testo)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="nav-logo" href="#" aria-label="Touché Consulting — torna all'inizio">
+      <!-- PAOLO: sostituire con la versione vettoriale del logo (SVG) quando disponibile -->
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAABQCAYAAAD7sIxLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNzI5MjMwMzdGQjQxMUU1QjM0QkQ3MjkyRjhGNTA2RiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNzI5MjMwNDdGQjQxMUU1QjM0QkQ3MjkyRjhGNTA2RiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE3MjkyMzAxN0ZCNDExRTVCMzRCRDcyOTJGOEY1MDZGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE3MjkyMzAyN0ZCNDExRTVCMzRCRDcyOTJGOEY1MDZGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8++h9P0wAAB3BJREFUeNrsXXuI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" alt="Touché Consulting" width="150" height="80">
+    </a>
+    <nav aria-label="Principale">
+      <ul class="nav-links">
+        <li><a href="#bando">Il bando</a></li>
+        <li><a href="#tem">Cosa fa un TEM</a></li>
+        <li><a href="#chi-siamo">Chi siamo</a></li>
+        <li><a href="#faq">Domande frequenti</a></li>
+        <li class="li-cta"><a class="nav-cta" href="#verifica">Verifica l'ammissibilità</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" aria-labelledby="titolo-hero">
+    <div class="wrap">
+      <p class="hero-kicker">Voucher TEM — Regione Sardegna, Camere di Commercio e Unioncamere</p>
+      <h1 id="titolo-hero">Fino a <span class="cifra">€60.000</span> a fondo perduto per portare la tua impresa sui mercati esteri</h1>
+      <p class="hero-sub">
+        Il nuovo voucher regionale copre <strong>l'80% del costo di un Temporary Export Manager</strong>:
+        un professionista che entra nella tua azienda e costruisce, in 6–12 mesi, un percorso concreto di
+        vendita all'estero. Touché Consulting ti affianca dalla verifica di ammissibilità fino ai risultati.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-rosso" href="#verifica">Verifica se la tua azienda è ammissibile</a>
+        <a class="btn btn-nero" href="#bando">Come funziona il bando</a>
+      </div>
+      <p class="hero-nota">
+        La verifica è gratuita e senza impegno. La procedura è a sportello: le domande vengono
+        finanziate in ordine di arrivo, fino a esaurimento delle risorse.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FASCIA NUMERI ============ -->
+  <div class="fascia" role="region" aria-label="I numeri del bando">
+    <div class="wrap fascia-grid">
+      <div class="dato">
+        <div class="valore"><em>80%</em></div>
+        <div class="voce">di contributo a fondo perduto sul costo del servizio</div>
+      </div>
+      <div class="dato">
+        <div class="valore">€60.000</div>
+        <div class="voce">l'importo massimo del voucher per impresa</div>
+      </div>
+      <div class="dato">
+        <div class="valore">6–12 <em>mesi</em></div>
+        <div class="voce">la durata del progetto export in azienda</div>
+      </div>
+      <div class="dato">
+        <div class="valore">€2,15 <em>mln</em></div>
+        <div class="voce">la dotazione complessiva, assegnata a sportello</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ IL BANDO ============ -->
+  <section id="bando" class="alt" aria-labelledby="titolo-bando">
+    <div class="wrap">
+      <div class="sez-testa">
+        <h2 id="titolo-bando"><span class="marca" aria-hidden="true"></span>Il bando, spiegato semplice</h2>
+        <p>
+          La Regione Sardegna, attraverso le Camere di Commercio e Unioncamere, finanzia
+          l'inserimento in azienda di Temporary Export Manager qualificati. Ecco cosa devi sapere.
+        </p>
+      </div>
+      <div class="colonne">
+        <div>
+          <div class="blocco">
+            <h3>A chi si rivolge</h3>
+            <p>
+              Alle micro, piccole e medie imprese con sede operativa in Sardegna che vogliono
+              iniziare a esportare o rafforzare una presenza estera già avviata. I requisiti
+              puntuali sono definiti dall'avviso ufficiale: li verifichiamo insieme, gratuitamente.
+            </p>
+          </div>
+          <div class="blocco">
+            <h3>Cosa copre</h3>
+            <p>
+              Il servizio di un Temporary Export Manager iscritto al repertorio dei fornitori:
+              analisi, strategia, sviluppo commerciale sui mercati esteri e affiancamento operativo,
+              incluse le missioni commerciali all'estero.
+            </p>
+          </div>
+          <div class="blocco">
+            <h3>Come viene erogato</h3>
+            <p>
+              Contributo dell'80% fino a €60.000 (regime de minimis). È previsto un anticipo del 50%
+              del contributo con garanzia fideiussoria — il cui costo è a sua volta una spesa
+              ammissibile — e il saldo dopo la rendicontazione finale.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="timeline" aria-label="Le tappe">
+            <div class="tappa">
+              <div class="quando">Adesso</div>
+              <div class="cosa">Verifica di ammissibilità e costruzione del piano di intervento su misura, per farsi trovare pronti all'apertura.</div>
+            </div>
+            <div class="tappa">
+              <div class="quando">Dalle 10:00 del 2 novembre 2026</div>
+              <div class="cosa">Apertura prevista dello sportello per la presentazione delle domande, in ordine cronologico.</div>
+            </div>
+            <div class="tappa">
+              <div class="quando">All'ammissione</div>
+              <div class="cosa">Firma del contratto con il TEM e avvio del progetto in azienda: 6–12 mesi di lavoro sui mercati scelti.</div>
+            </div>
+            <div class="tappa">
+              <div class="quando">A fine progetto</div>
+              <div class="cosa">Rendicontazione, verifica camerale e saldo del contributo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COSA FA UN TEM ============ -->
+  <section id="tem" aria-labelledby="titolo-tem">
+    <div class="wrap">
+      <div class="sez-testa">
+        <h2 id="titolo-tem"><span class="marca" aria-hidden="true"></span>Cosa fa un Temporary Export Manager</h2>
+        <p>
+          Non un corso, non una consulenza generica: un manager dell'export che lavora dentro la tua
+          azienda, con obiettivi commerciali definiti e misurabili.
+        </p>
+      </div>
+      <div class="servizi">
+        <div class="servizio">
+          <h3>Analisi e scelta dei mercati</h3>
+          <p>Studio del potenziale export dei tuoi prodotti e selezione dei mercati dove le probabilità di successo sono più alte, con dati e non con sensazioni.</p>
+        </div>
+        <div class="servizio">
+          <h3>Strategia e piano export</h3>
+          <p>Posizionamento, pricing per l'estero, canali di vendita e un piano operativo con tempi, responsabilità e obiettivi trimestrali.</p>
+        </div>
+        <div class="servizio">
+          <h3>Ricerca di buyer e partner</h3>
+          <p>Individuazione e contatto diretto di importatori, distributori e clienti finali nei mercati target, fino alla trattativa.</p>
+        </div>
+        <div class="servizio">
+          <h3>Missioni commerciali</h3>
+          <p>Preparazione e affiancamento in fiere, incontri B2B e missioni all'estero previste dal progetto.</p>
+        </div>
+        <div class="servizio">
+          <h3>Export digitale</h3>
+          <p>Marketplace internazionali, presenza digitale multilingua e generazione di contatti esteri qualificati.</p>
+        </div>
+        <div class="servizio">
+          <h3>Organizzazione interna</h3>
+          <p>Procedure, documenti e competenze per gestire l'export anche dopo la fine del progetto: l'obiettivo è renderti autonomo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHI SIAMO ============ -->
+  <section id="chi-siamo" class="alt" aria-labelledby="titolo-chi">
+    <div class="wrap">
+      <div class="sez-testa">
+        <h2 id="titolo-chi"><span class="marca" aria-hidden="true"></span>Chi c'è dietro Touché Consulting</h2>
+      </div>
+      <div class="chi-grid">
+        <div class="chi-testo">
+          <p>
+            Touché Consulting riunisce un gruppo selezionato di Temporary Export Manager senior,
+            con esperienza sui mercati europei ed extraeuropei e competenze che coprono i principali
+            settori dell'economia sarda — agroalimentare, manifattura, turismo, servizi — e
+            l'export digitale.
+          </p>
+          <p>
+            Il progetto è guidato da consulenti con decenni di esperienza in
+            internazionalizzazione, marketing e gestione d'impresa, che conoscono da vicino sia il
+            tessuto produttivo sardo sia il funzionamento dei bandi camerali e regionali.
+          </p>
+          <p>
+            Seguiamo un numero volutamente limitato di progetti per ciclo, per garantire a ogni
+            impresa la presenza effettiva del TEM in azienda e risultati di cui rispondere.
+          </p>
+        </div>
+        <div class="principi">
+          <h3>Il nostro impegno</h3>
+          <ul>
+            <li>Verifica di ammissibilità gratuita e onesta: se il bando non fa per te, te lo diciamo.</li>
+            <li>TEM dedicati in esclusiva ai progetti Touché, non condivisi con altri operatori.</li>
+            <li>Piano di intervento costruito prima della domanda, non dopo.</li>
+            <li>Obiettivi commerciali scritti nel progetto e verificabili in itinere.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORM ============ -->
+  <section id="verifica" class="form-sez" aria-labelledby="titolo-form">
+    <div class="wrap">
+      <div class="sez-testa">
+        <h2 id="titolo-form"><span class="marca" aria-hidden="true"></span>Verifica se la tua azienda è ammissibile</h2>
+        <p>
+          Compila il modulo: ti ricontattiamo entro un giorno lavorativo per una prima valutazione
+          gratuita e senza impegno. Le domande verranno finanziate in ordine di arrivo — muoversi
+          adesso significa presentarsi allo sportello con il progetto già pronto.
+        </p>
+      </div>
+
+      <!-- ================================================================
+           Form collegato a HubSpot (account Touché Consulting, portal 149459646)
+           tramite la Forms API v3. Il GUID del modulo HubSpot va inserito
+           nella costante HS_FORM_GUID nello script in fondo alla pagina.
+           I name dei campi sono i nomi interni delle proprietà HubSpot.
+           ================================================================ -->
+      <form class="form-grid" id="form-qualificazione" novalidate>
+        <div class="campo">
+          <label for="ragione">Ragione sociale</label>
+          <input type="text" id="ragione" name="company" autocomplete="organization" required>
+        </div>
+        <div class="campo">
+          <label for="settore">Settore di attività</label>
+          <select id="settore" name="tem_settore" required>
+            <option value="">Seleziona…</option>
+            <option value="agroalimentare_bevande">Agroalimentare e bevande (trasformazione)</option>
+            <option value="manifattura_artigianato">Manifattura e artigianato</option>
+            <option value="estrattivo_b08">Estrazione e lavorazione pietre</option>
+            <option value="costruzioni_f">Costruzioni</option>
+            <option value="editoria_audiovisivo">Editoria, cinema e audiovisivo</option>
+            <option value="software_it">Software e servizi informatici</option>
+            <option value="ingegneria_ricerca">Ingegneria, ricerca e servizi tecnici</option>
+            <option value="call_center">Call center</option>
+            <option value="altro_da_verificare">Altro settore (lo verifichiamo insieme)</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="fatturato">Fatturato annuo</label>
+          <select id="fatturato" name="tem_fascia_fatturato" required>
+            <option value="">Seleziona…</option>
+            <option value="fino_250k">Fino a €250.000</option>
+            <option value="250k_1m">€250.000 – €1 milione</option>
+            <option value="1m_5m">€1 – 5 milioni</option>
+            <option value="oltre_5m">Oltre €5 milioni</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="export">Esperienza di export</label>
+          <select id="export" name="tem_esperienza_export" required>
+            <option value="">Seleziona…</option>
+            <option value="nessuna">Nessuna: vogliamo iniziare</option>
+            <option value="occasionale">Occasionale: qualche vendita estera</option>
+            <option value="consolidata">Consolidata: vogliamo crescere</option>
+          </select>
+        </div>
+        <div class="campo largo">
+          <label for="mercati">Mercati o Paesi di interesse (anche indicativi)</label>
+          <input type="text" id="mercati" name="tem_mercati_interesse" placeholder="Es. Germania, Francia, Emirati…">
+        </div>
+        <div class="campo">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="firstname" autocomplete="given-name" required>
+        </div>
+        <div class="campo">
+          <label for="cognome">Cognome</label>
+          <input type="text" id="cognome" name="lastname" autocomplete="family-name" required>
+        </div>
+        <div class="campo">
+          <label for="ruolo">Ruolo in azienda</label>
+          <input type="text" id="ruolo" name="jobtitle" placeholder="Es. titolare, direttore commerciale…">
+        </div>
+        <div class="campo">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+        <div class="campo">
+          <label for="telefono">Telefono</label>
+          <input type="tel" id="telefono" name="phone" autocomplete="tel" required>
+        </div>
+        <label class="consenso">
+          <input type="checkbox" id="privacy" required>
+          <span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.</span>
+        </label>
+        <input type="hidden" name="tem_fonte" value="sito_bandotemsardegna">
+        <!-- campo trappola anti-spam: invisibile alle persone, i bot lo compilano -->
+        <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+          <label for="sito_web">Lascia vuoto</label>
+          <input type="text" id="sito_web" name="sito_web" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="btn btn-rosso" type="submit" id="form-invio">Richiedi la verifica gratuita</button>
+        <p class="form-esito" id="form-esito" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" aria-labelledby="titolo-faq">
+    <div class="wrap">
+      <div class="sez-testa">
+        <h2 id="titolo-faq"><span class="marca" aria-hidden="true"></span>Domande frequenti</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Quanto costa davvero alla mia azienda?</summary>
+          <div class="risposta">
+            <p>
+              Il voucher copre l'80% del costo del servizio, fino a €60.000. Resta a carico
+              dell'impresa il 20% del valore del progetto e l'IVA, che per regola del bando è
+              esclusa dal contributo. In fase di verifica ti presentiamo il conto esatto, sul
+              progetto dimensionato per la tua azienda, prima di qualunque impegno.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Devo anticipare tutto e aspettare il rimborso?</summary>
+          <div class="risposta">
+            <p>
+              No. Il bando prevede un anticipo del 50% del contributo, ottenibile con una garanzia
+              fideiussoria il cui costo è a sua volta spesa ammissibile. Il saldo arriva dopo la
+              rendicontazione finale e le verifiche camerali. Costruiamo il piano dei pagamenti in
+              modo che sia sostenibile per la tua cassa lungo tutto il progetto.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>È un click day? Devo correre?</summary>
+          <div class="risposta">
+            <p>
+              Non è un click day: è una procedura a sportello, aperta fino a esaurimento della
+              dotazione di €2,15 milioni. Le domande vengono però istruite in ordine di arrivo,
+              quindi presentarsi presto con un progetto ben costruito aumenta concretamente le
+              probabilità di essere finanziati.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Quanto dura il progetto e cosa include?</summary>
+          <div class="risposta">
+            <p>
+              Il contratto con il TEM dura da 6 a 12 mesi (fino a 18 per progetti in aggregazione
+              tra più imprese) e può includere fino a tre missioni all'estero per semestre. Il
+              contenuto esatto — mercati, attività, giornate — è definito nel piano di intervento
+              che prepariamo insieme prima della domanda.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>La mia azienda non ha mai esportato: ha senso?</summary>
+          <div class="risposta">
+            <p>
+              Il bando è pensato anche per chi parte da zero, ed è proprio lì che un TEM fa la
+              differenza. La verifica di ammissibilità serve anche a questo: se riteniamo che la tua
+              azienda non sia pronta o che il bando non sia lo strumento giusto, te lo diciamo con
+              franchezza.
+            </p>
+          </div>
+        </details>
+        <details>
+          <summary>Chi presenta la domanda?</summary>
+          <div class="risposta">
+            <p>
+              La domanda è dell'impresa, ma non sei solo: prepariamo insieme il piano di intervento
+              e la documentazione, e ti accompagniamo in tutti i passaggi con le Camere di Commercio,
+              dalla presentazione alla rendicontazione finale.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAABQCAYAAAD7sIxLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBNzI5MjMwMzdGQjQxMUU1QjM0QkQ3MjkyRjhGNTA2RiIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBNzI5MjMwNDdGQjQxMUU1QjM0QkQ3MjkyRjhGNTA2RiI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE3MjkyMzAxN0ZCNDExRTVCMzRCRDcyOTJGOEY1MDZGIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE3MjkyMzAyN0ZCNDExRTVCMzRCRDcyOTJGOEY1MDZGIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8++h9P0wAAB3BJREFUeNrsXXuI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" alt="Touché Consulting" width="150" height="80">
+      <div class="disclaimer">
+        <p>
+          <strong>Touché Consulting</strong> è un'iniziativa privata di consulenza per
+          l'internazionalizzazione delle imprese. Questo sito non è il sito ufficiale del bando né
+          un sito istituzionale: il voucher TEM è promosso dalla Regione Autonoma della Sardegna e
+          gestito dalle Camere di Commercio con Unioncamere, ai cui canali ufficiali si rimanda per
+          i testi integrali dell'avviso, che fanno fede in caso di difformità.
+        </p>
+        <p>
+          Le informazioni pubblicate sono aggiornate alla data odierna sulla base della
+          documentazione disponibile e potranno essere adeguate alla pubblicazione dell'avviso
+          definitivo.
+        </p>
+        <div class="foot-links">
+          <a href="https://www.toucheconsulting.it">toucheconsulting.it</a>
+          <a href="privacy.html">Informativa privacy</a>
+          <a href="#verifica">Verifica l'ammissibilità</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Invio del form a HubSpot (Forms API v3, data center EU).
+  // HS_FORM_GUID: Marketing > Moduli > [modulo] > l'ID nell'URL dell'editor.
+  var HS_PORTAL_ID = '149459646';
+  var HS_FORM_GUID = '8a7c72bc-36c3-46f7-a946-eaf4ad188aaa';
+  var HS_ENDPOINT = 'https://api-eu1.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
+  var TESTO_CONSENSO = "Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.";
+
+  function leggiCookie(nome){
+    var m = document.cookie.match('(?:^|; )' + nome + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : undefined;
+  }
+
+  document.getElementById('form-qualificazione').addEventListener('submit', function(e){
+    e.preventDefault();
+    var form = this;
+    var esito = document.getElementById('form-esito');
+    var bottone = document.getElementById('form-invio');
+    if(!form.checkValidity()){ form.reportValidity(); return; }
+    if(form.sito_web.value){ return; } // bot
+
+    var campi = ['company','tem_settore','tem_fascia_fatturato','tem_esperienza_export',
+                 'tem_mercati_interesse','firstname','lastname','jobtitle','email','phone','tem_fonte'];
+    var fields = [];
+    campi.forEach(function(n){
+      var v = (form.elements[n].value || '').trim();
+      if(v){ fields.push({objectTypeId:'0-1', name:n, value:v}); }
+    });
+
+    var context = { pageUri: location.href, pageName: document.title };
+    var hutk = leggiCookie('hubspotutk');
+    if(hutk){ context.hutk = hutk; }
+
+    var payload = {
+      fields: fields,
+      context: context,
+      legalConsentOptions: { consent: { consentToProcess: true, text: TESTO_CONSENSO, communications: [] } }
+    };
+
+    bottone.disabled = true;
+    esito.className = 'form-esito';
+    esito.textContent = '';
+
+    fetch(HS_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok){ throw new Error('HTTP ' + r.status); }
+      form.reset();
+      esito.textContent = 'Grazie! Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro un giorno lavorativo.';
+      esito.classList.add('ok');
+    }).catch(function(){
+      esito.textContent = 'Non siamo riusciti a inviare il modulo. Riprova tra qualche minuto.';
+      esito.classList.add('err');
+    }).finally(function(){
+      bottone.disabled = false;
+    });
+  });
+</script>
+
+<!-- Codice di tracciamento HubSpot (account Touché Consulting, data center EU) -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/149459646.js"></script>
+
+</body>
+</html>
