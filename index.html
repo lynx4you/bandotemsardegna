@@ -500,7 +500,7 @@
         </div>
         <label class="consenso">
           <input type="checkbox" id="privacy" required>
-          <span>Ho letto l'<a href="https://www.toucheconsulting.it/privacy/" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.</span>
+          <span>Ho letto l'<a href="privacy.html" target="_blank" rel="noopener">informativa privacy</a> e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.</span>
         </label>
         <input type="hidden" name="tem_fonte" value="sito_bandotemsardegna">
         <!-- campo trappola anti-spam: invisibile alle persone, i bot lo compilano -->
@@ -611,7 +611,7 @@
         </p>
         <div class="foot-links">
           <a href="https://www.toucheconsulting.it">toucheconsulting.it</a>
-          <a href="https://www.toucheconsulting.it/privacy/">Informativa privacy</a>
+          <a href="privacy.html">Informativa privacy</a>
           <a href="#verifica">Verifica l'ammissibilità</a>
         </div>
       </div>
@@ -626,6 +626,15 @@
   var HS_FORM_GUID = '8a7c72bc-36c3-46f7-a946-eaf4ad188aaa';
   var HS_ENDPOINT = 'https://api-eu1.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
   var TESTO_CONSENSO = "Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.";
+
+  // Telefono in formato internazionale: HubSpot rifiuta i numeri senza prefisso.
+  function normalizzaTelefono(v){
+    v = (v || '').replace(/[\s.\-\/()]/g, '');
+    if(!v){ return ''; }
+    if(v.indexOf('00') === 0){ v = '+' + v.slice(2); }
+    if(v.charAt(0) !== '+'){ v = '+39' + v; }
+    return v;
+  }
 
   function leggiCookie(nome){
     var m = document.cookie.match('(?:^|; )' + nome + '=([^;]*)');
@@ -645,6 +654,7 @@
     var fields = [];
     campi.forEach(function(n){
       var v = (form.elements[n].value || '').trim();
+      if(n === 'phone'){ v = normalizzaTelefono(v); }
       if(v){ fields.push({objectTypeId:'0-1', name:n, value:v}); }
     });
 
@@ -652,27 +662,59 @@
     var hutk = leggiCookie('hubspotutk');
     if(hutk){ context.hutk = hutk; }
 
-    var payload = {
-      fields: fields,
-      context: context,
-      legalConsentOptions: { consent: { consentToProcess: true, text: TESTO_CONSENSO, communications: [] } }
-    };
+    var consenso = { consent: { consentToProcess: true, text: TESTO_CONSENSO, communications: [] } };
 
     bottone.disabled = true;
     esito.className = 'form-esito';
     esito.textContent = '';
 
-    fetch(HS_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).then(function(r){
-      if(!r.ok){ throw new Error('HTTP ' + r.status); }
+    function invia(campiDaInviare, conHutk){
+      var ctx = { pageUri: context.pageUri, pageName: context.pageName };
+      if(conHutk && context.hutk){ ctx.hutk = context.hutk; }
+      return fetch(HS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: campiDaInviare, context: ctx, legalConsentOptions: consenso })
+      }).then(function(r){
+        if(r.ok){ return { ok: true }; }
+        return r.json().catch(function(){ return {}; }).then(function(j){
+          return { ok: false, status: r.status, errori: (j && j.errors) || [] };
+        });
+      });
+    }
+
+    // 1° tentativo completo. Se HubSpot rifiuta solo campi secondari (es. telefono
+    // in formato non valido o cookie di tracciamento), si ritenta senza di essi,
+    // così il modulo HubSpot registra comunque l'invio e parte l'email automatica.
+    invia(fields, true).then(function(res){
+      if(res.ok){ return res; }
+      console.error('HubSpot Forms API', res.status, res.errori);
+      var tipi = res.errori.map(function(x){ return x.errorType || ''; });
+      var bloccanti = tipi.some(function(t){ return /EMAIL|RECAPTCHA|CAPTCHA|FORM/.test(t) && t !== 'FIELD_NOT_IN_FORM_DEFINITION'; });
+      if(bloccanti){ return res; }
+      var scarta = {};
+      res.errori.forEach(function(x){
+        var m = (x.message || '').match(/fields\.([a-z0-9_]+)/i);
+        if(m && m[1] !== 'email'){ scarta[m[1]] = true; }
+      });
+      var ridotti = fields.filter(function(f){ return !scarta[f.name]; });
+      return invia(ridotti, !tipi.some(function(t){ return /HUTK/.test(t); })).then(function(res2){
+        if(!res2.ok){ console.error('HubSpot Forms API (2)', res2.status, res2.errori); }
+        return res2;
+      });
+    }).then(function(res){
+      if(!res.ok){
+        var e = new Error('HTTP ' + res.status);
+        e.tipi = res.errori.map(function(x){ return x.errorType; }).join(', ');
+        throw e;
+      }
       form.reset();
-      esito.textContent = 'Grazie! Abbiamo ricevuto la tua richiesta: ti ricontattiamo entro un giorno lavorativo.';
+      esito.textContent = 'Grazie! Abbiamo ricevuto la tua richiesta: a breve riceverai un\'email con il link per fissare la video call.';
       esito.classList.add('ok');
-    }).catch(function(){
-      esito.textContent = 'Non siamo riusciti a inviare il modulo. Riprova tra qualche minuto.';
+    }).catch(function(err){
+      var msg = 'Non siamo riusciti a inviare il modulo. Riprova tra qualche minuto oppure scrivici a info@toucheconsulting.it.';
+      if(err && /EMAIL/.test(err.tipi || '')){ msg = 'L\'indirizzo email non è stato accettato: per favore usa l\'email aziendale.'; }
+      esito.textContent = msg + (err && err.tipi ? ' [codice: ' + err.tipi + ']' : '');
       esito.classList.add('err');
     }).finally(function(){
       bottone.disabled = false;
