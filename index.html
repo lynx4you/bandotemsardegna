@@ -626,6 +626,7 @@
   var HS_FORM_GUID = '8a7c72bc-36c3-46f7-a946-eaf4ad188aaa';
   var HS_ENDPOINT = 'https://api-eu1.hsforms.com/submissions/v3/integration/submit/' + HS_PORTAL_ID + '/' + HS_FORM_GUID;
   var TESTO_CONSENSO = "Ho letto l'informativa privacy e acconsento al trattamento dei dati per essere ricontattato in merito alla mia richiesta.";
+  var TESTO_LEGITTIMO_INTERESSE = "Touché Consulting tratta i dati forniti sulla base del legittimo interesse, per rispondere alla richiesta di verifica di ammissibilità e ricontattare l'interessato in merito al Voucher TEM. È possibile opporsi in qualsiasi momento.";
 
   // Telefono in formato internazionale: HubSpot rifiuta i numeri senza prefisso.
   function normalizzaTelefono(v){
@@ -662,7 +663,7 @@
     var hutk = leggiCookie('hubspotutk');
     if(hutk){ context.hutk = hutk; }
 
-    var consenso = { consent: { consentToProcess: true, text: TESTO_CONSENSO, communications: [] } };
+    var consenso = { legitimateInterest: { value: true, subscriptionTypeId: 3783280884, legalBasis: 'LEAD', text: TESTO_LEGITTIMO_INTERESSE } };
 
     bottone.disabled = true;
     esito.className = 'form-esito';
