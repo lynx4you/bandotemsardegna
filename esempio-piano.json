@@ -1,0 +1,131 @@
+{
+ "v": 1,
+ "deal_id": "",
+ "classe": "f2",
+ "impresa": {
+  "ragione_sociale": "Caseificio Esempio srl",
+  "piva": "",
+  "cf": "",
+  "forma_giuridica": "",
+  "sede_legale": "Via Roma 1, 09100 Cagliari",
+  "sede_operativa": "",
+  "ateco": "10.51.20",
+  "data_costituzione": "",
+  "addetti": "",
+  "fatturato": "",
+  "referente": "Maria Rossi",
+  "telefono": "070 000000",
+  "email": "maria@esempio.it",
+  "pec": "",
+  "legale_rappresentante": ""
+ },
+ "profilo": {
+  "attivita": "Produzione di formaggi ovini DOP.",
+  "prodotti": "Pecorino Sardo DOP, Fiore Sardo",
+  "mercati_serviti": "Italia, Germania",
+  "esperienze": ""
+ },
+ "fabbisogno": {
+  "situazione": "Export 8% del fatturato.",
+  "fabbisogni": "Strategia per il Golfo.",
+  "criticita": "Nessun export manager interno.",
+  "opportunita": "Domanda di formaggi premium negli EAU."
+ },
+ "obiettivi": {
+  "avvio": false,
+  "cons": true,
+  "nuovi": true,
+  "dig": false,
+  "cert": true,
+  "altro": false,
+  "altro_testo": ""
+ },
+ "mercati": [
+  {
+   "paese": "Emirati Arabi Uniti",
+   "prodotto": "Pecorino Sardo DOP",
+   "motivazione": "Canale HoReCa in crescita"
+  },
+  {
+   "paese": "Arabia Saudita",
+   "prodotto": "Fiore Sardo",
+   "motivazione": "Vision 2030, GDO premium"
+  }
+ ],
+ "servizi": {
+  "chk": {
+   "gg_junior": 3,
+   "mercato": "EAU, KSA",
+   "desc": "Analisi organizzazione export"
+  },
+  "str": {
+   "gg_senior": 8,
+   "desc": "Piano export Golfo"
+  },
+  "mis": {
+   "gg_senior": 12,
+   "gg_junior": 4,
+   "mercato": "EAU, KSA",
+   "desc": "Due missioni B2B",
+   "missioni": [
+    {
+     "mercato": "EAU",
+     "missione": "Gulfood Dubai",
+     "gg": 8,
+     "desc": "4 meeting importatori"
+    },
+    {
+     "mercato": "KSA",
+     "missione": "Riyadh B2B",
+     "gg": 8,
+     "desc": "4 meeting GDO"
+    }
+   ]
+  },
+  "cert": {
+   "gg_junior": 10,
+   "mercato": "KSA",
+   "desc": "Registrazione SFDA"
+  },
+  "coo": {
+   "gg_senior": 7
+  },
+  "mon": {
+   "gg_senior": 5
+  }
+ },
+ "premialita": {
+  "rating": true,
+  "parita": false
+ },
+ "erogazione": "anticipo",
+ "risultati": [
+  {
+   "val": "20"
+  },
+  {
+   "val": "8"
+  },
+  {
+   "val": "2"
+  },
+  {
+   "val": "1"
+  },
+  {
+   "ind": "Contratti di distribuzione",
+   "val": "1"
+  }
+ ],
+ "fornitore": {
+  "nome": "Touché Consulting srl",
+  "piva": "",
+  "coordinatore": "Massimo Cugusi (senior)",
+  "team": "Massimo Cugusi (senior); N.N. (junior)",
+  "data_inizio": "01/01/2027",
+  "data_fine": "31/12/2027"
+ },
+ "luogo": "Cagliari",
+ "data": "",
+ "stato": "bozza"
+}

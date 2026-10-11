@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Avvio progetto · Touché</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/piano.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <img src="/logo-touche.png" alt="Touché Consulting">
+  <div class="tit">Avvio progetto Voucher TEM<small>Pagina interna Touché · dopo la call di qualificazione</small></div>
+  <div class="stato" id="salvataggio"></div>
+</div><div class="barra"><i id="barra"></i></div></header>
+
+<main>
+  <div class="admin-box">
+    <div class="campo"><label for="key">Chiave interna</label><input type="password" id="key" autocomplete="current-password"></div>
+    <div class="campo"><label for="deal">ID del deal HubSpot</label><input type="text" id="deal" placeholder="il numero nell'indirizzo della scheda deal"></div>
+    <button class="btn rosso" id="btnCarica" type="button">Carica da HubSpot</button>
+    <div class="campo"><label for="progetto">Progetto Asana già duplicato dal MODELLO (facoltativo): incolla il link</label><input type="text" id="progetto" placeholder="https://app.asana.com/… · se vuoto, il progetto lo crea il sistema"></div>
+    <div class="campo"><label for="riapri">Oppure riapri un progetto: incolla il link dell'impresa</label><input type="text" id="riapri" placeholder="https://bandotemsardegna.it/piano.html?t=…"></div>
+    <button class="btn" id="btnRiapri" type="button">Riapri</button>
+    <button class="btn pic" id="btnDemo" type="button">Prova con dati di esempio</button>
+  </div>
+  <div id="esito"></div>
+  <div id="modulo"></div>
+</main>
+
+<div class="azioni" id="azioni" hidden><div class="in">
+  <span class="info" id="avanz"></span>
+  <button class="btn rosso" id="btnCrea" type="button">Crea il link per l'impresa</button>
+</div></div>
+
+<script src="/config.js"></script>
+<script src="/lib/regole.js"></script>
+<script src="/piano-ui.js"></script>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  let tok = null, iniziato = false;
+  try { $("#key").value = localStorage.getItem("tem_admin_key") || ""; } catch (_) {}
+  const key = () => { const k = $("#key").value.trim(); try { localStorage.setItem("tem_admin_key", k); } catch (_) {} return k; };
+
+  async function api(metodo, q, body) {
+    const r = await fetch((window.TEM_API || "") + "/api/avvia" + (q || ""), { method: metodo, headers: { "Content-Type": "application/json", "x-admin-key": key() },
+      body: body ? JSON.stringify(body) : undefined });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.errore || "Errore " + r.status);
+    return j;
+  }
+  const esito = (html) => ($("#esito").innerHTML = html);
+
+  function apri(data, t) {
+    tok = t || null;
+    // proposta di partenza: servizi obbligatori al massimo della classe, check-up junior
+    if (!t && !Object.keys(data.servizi || {}).length) {
+      const S = TEMRegole.REGOLE.servizi, cl = data.classe || "f1";
+      data.servizi = { chk: { gg_junior: S.chk.max[cl] }, str: { gg_senior: S.str.max[cl] }, coo: { gg_senior: S.coo.max[cl] }, mon: { gg_senior: S.mon.max[cl] } };
+    }
+    if (!iniziato) { PianoUI.init(data, { modo: "admin" }); iniziato = true; }
+    else { Object.assign(PianoUI.dati(), data); Object.keys(PianoUI.dati()).forEach((k) => { if (!(k in data)) delete PianoUI.dati()[k]; }); PianoUI.render(); }
+    $("#azioni").hidden = false;
+    $("#btnCrea").textContent = tok ? "Salva le modifiche" : "Crea il link per l'impresa";
+  }
+
+  $("#btnCarica").onclick = async () => {
+    const id = $("#deal").value.replace(/\D/g, "");
+    if (!id) return alert("Inserisci l'ID del deal");
+    esito('<div class="msg info">Lettura da HubSpot…</div>');
+    try { const j = await api("GET", "?deal=" + id); apri(j.data); esito('<div class="msg ok">Dati caricati da HubSpot. Completa ciò che sai dalla call e la proposta di servizi.</div>'); }
+    catch (e) { esito(`<div class="msg err">${e.message}</div>`); }
+  };
+  $("#btnRiapri").onclick = async () => {
+    const t = new URL($("#riapri").value.trim(), location.href).searchParams.get("t");
+    if (!t) return alert("Link non riconosciuto");
+    try { const j = await api("GET", "?t=" + encodeURIComponent(t)); apri(j.data, t); esito('<div class="msg ok">Progetto riaperto. Le modifiche ai servizi saranno visibili all\'impresa.</div>'); }
+    catch (e) { esito(`<div class="msg err">${e.message}</div>`); }
+  };
+  $("#btnDemo").onclick = async () => { apri(await (await fetch("/esempio-piano.json")).json()); esito('<div class="msg info">Dati di esempio: non creare il progetto.</div>'); };
+
+  $("#btnCrea").onclick = async () => {
+    const d = PianoUI.dati(), c = TEMRegole.calcola(d);
+    if (c.errori.length && !confirm("Ci sono controlli da correggere:\n- " + c.errori.join("\n- ") + "\n\nProcedere comunque?")) return;
+    const b = $("#btnCrea"); b.disabled = true;
+    try {
+      const j = await api("POST", "", tok ? { t: tok, data: d } : { data: d, progetto: $("#progetto").value.trim() || undefined });
+      tok = j.t;
+      const nome = (d.impresa.referente || "").split(" ")[0];
+      const mail = `Oggetto: Voucher TEM – il tuo Piano di intervento da completare\n\nGentile ${nome},\ngrazie per la call. Come d'accordo, abbiamo preparato il Piano di intervento per il Voucher TEM con i dati che già conosciamo e la proposta di servizi.\n\nTi chiediamo di verificarlo e completare i campi mancanti (circa 15 minuti) entro 3 giorni lavorativi:\n${j.link}\n\nTieni a portata di mano la visura camerale e l'ultimo bilancio. I dati si salvano da soli: puoi interrompere e riprendere quando vuoi.\n\nUn cordiale saluto,\nMassimo Cugusi\nTouché Consulting`;
+      esito(`<div class="sez"><header><span class="n">✓</span><h2>${j.asana ? "Link creato" : "Modifiche salvate"}</h2></header><div class="corpo">
+        <div class="risultato"><b>Link per l'impresa:</b> <a href="${j.link}" target="_blank" rel="noopener">${j.link}</a>
+          <button class="btn pic" type="button" onclick="navigator.clipboard.writeText('${j.link}')">Copia</button></div>
+        ${j.asana ? `<div class="risultato"><b>Progetto Asana:</b> <a href="${j.asana}" target="_blank" rel="noopener">${j.asana}</a></div>` : ""}
+        <div class="campo largo"><label for="mail">Email da inviare all'impresa</label><textarea id="mail" style="min-height:240px">${mail}</textarea></div>
+      </div></div>`);
+      window.scrollTo(0, 0);
+      b.textContent = "Salva le modifiche";
+    } catch (e) { esito(`<div class="msg err">${e.message}</div>`); window.scrollTo(0, 0); }
+    b.disabled = false;
+  };
+})();
+</script>
+</body>
+</html>

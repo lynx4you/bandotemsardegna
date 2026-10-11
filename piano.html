@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Piano di intervento · Touché</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/piano.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <img src="/logo-touche.png" alt="Touché Consulting">
+  <div class="tit">Piano di intervento<small id="impresa">Voucher TEM Sardegna</small></div>
+  <div class="stato" id="salvataggio"></div>
+</div><div class="barra"><i id="barra"></i></div></header>
+
+<main>
+  <div id="schermo">
+    <section class="intro">
+      <h1>Ci siamo quasi. <em>Completa il tuo Piano.</em></h1>
+      <p>Abbiamo già inserito quello che ci hai raccontato in call e la proposta di servizi. Ti chiediamo solo di <b>verificare i campi precompilati</b> (bordo rosso) e di <b>completare quelli vuoti con l'asterisco</b>.</p>
+      <p>Puoi interrompere quando vuoi: i dati si salvano da soli e ritrovi tutto riaprendo questo link. Servono circa 15 minuti, con una visura camerale a portata di mano.</p>
+      <div class="legenda"><span>* obbligatorio</span><span style="color:#ff8a8f">▍precompilato da Touché: verifica</span></div>
+    </section>
+    <div id="modulo"><p>Caricamento…</p></div>
+  </div>
+</main>
+
+<div class="azioni" id="azioni" hidden><div class="in">
+  <span class="info" id="avanz"></span>
+  <button class="btn" id="btnSalva" type="button">Salva e continua dopo</button>
+  <button class="btn rosso" id="btnInvia" type="button">Invia a Touché</button>
+</div></div>
+
+<script src="/config.js"></script>
+<script src="/lib/regole.js"></script>
+<script src="/piano-ui.js"></script>
+<script>
+(function () {
+  const t = new URLSearchParams(location.search).get("t");
+  const demo = !t;
+  const stato = (s) => (document.getElementById("salvataggio").textContent = s);
+
+  async function api(metodo, body) {
+    const r = await fetch((window.TEM_API || "") + "/api/piano" + (metodo === "GET" ? "?t=" + encodeURIComponent(t) : ""), {
+      method: metodo, headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify({ t, ...body }) : undefined,
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) { const e = new Error(j.errore || "Errore " + r.status); e.mancanti = j.mancanti; throw e; }
+    return j;
+  }
+
+  async function salva(manuale) {
+    if (demo) { stato("Anteprima: nessun salvataggio"); return; }
+    try { stato("Salvataggio…"); await api("POST", { data: PianoUI.dati(), azione: "salva" }); PianoUI.salvato();
+      stato("Salvato alle " + new Date().toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })); }
+    catch (e) { stato("Non salvato: riprova"); if (manuale) alert(e.message); }
+  }
+
+  async function invia() {
+    if (!PianoUI.evidenziaMancanti()) { alert("Mancano alcuni campi obbligatori: li abbiamo evidenziati in rosso."); return; }
+    if (!confirm("Confermi l'invio? Dopo l'invio rivediamo il Piano insieme prima della firma digitale.")) return;
+    const b = document.getElementById("btnInvia"); b.disabled = true; b.textContent = "Invio…";
+    try {
+      if (!demo) await api("POST", { data: PianoUI.dati(), azione: "invia" });
+      document.getElementById("azioni").hidden = true;
+      document.getElementById("schermo").innerHTML = `<section class="fine"><h2>Grazie, abbiamo ricevuto i dati.</h2>
+        <p>Ecco cosa succede adesso:</p><ol>
+        <li>Prepariamo il Piano di intervento definitivo e il preventivo con i CV del team (art. 10).</li>
+        <li>Ti chiamiamo per rivederli insieme e, se serve, li correggiamo.</li>
+        <li>Il legale rappresentante firma digitalmente Piano e accettazione del preventivo.</li>
+        <li>Presentiamo la domanda su ReStart all'apertura dello sportello, dalle 10:00 del 2 novembre 2026.</li></ol>
+        <p>Nel frattempo tieni pronti: visura camerale, polizza catastrofale, firma digitale, SPID e PEC del legale rappresentante.</p>
+        <p>Per qualsiasi dubbio rispondi alla nostra email o scrivi a Massimo Cugusi.</p></section>`;
+      window.scrollTo(0, 0);
+    } catch (e) { alert(e.message); b.disabled = false; b.textContent = "Invia a Touché"; }
+  }
+
+  async function avvio() {
+    let data;
+    try { data = demo ? await (await fetch("/esempio-piano.json")).json() : (await api("GET")).data; }
+    catch (e) { document.getElementById("modulo").innerHTML = `<div class="msg err">${e.message}</div>`; return; }
+    if (data.stato === "inviato") stato("Già inviato il " + (data.inviato_il || "") + ": puoi correggere e reinviare");
+    else if (demo) stato("Anteprima con dati di esempio");
+    document.getElementById("impresa").textContent = data.impresa?.ragione_sociale || "Voucher TEM Sardegna";
+    PianoUI.init(data, { modo: "cliente", onSave: salva });
+    document.getElementById("azioni").hidden = false;
+    document.getElementById("btnSalva").onclick = () => salva(true);
+    document.getElementById("btnInvia").onclick = invia;
+    window.addEventListener("beforeunload", (e) => { if (PianoUI.sporco() && !demo) { salva(false); e.preventDefault(); } });
+  }
+  avvio();
+})();
+</script>
+</body>
+</html>
