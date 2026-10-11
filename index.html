@@ -709,8 +709,18 @@
         e.tipi = res.errori.map(function(x){ return x.errorType; }).join(', ');
         throw e;
       }
+            // Link al calendario precompilato con nome ed email, così l'utente prenota subito
+      var linkCall = 'https://meetings-eu1.hubspot.com/massimo-cugusi'
+        + '?firstname=' + encodeURIComponent(form.firstname.value || '')
+        + '&lastname=' + encodeURIComponent(form.lastname.value || '')
+        + '&email=' + encodeURIComponent(form.email.value || '');
       form.reset();
-      esito.textContent = 'Grazie! Abbiamo ricevuto la tua richiesta: a breve riceverai un\'email con il link per fissare la video call.';
+      esito.innerHTML = '<strong>Grazie! Abbiamo ricevuto la tua richiesta.</strong><br>'
+        + 'Il prossimo passo è una video call di 30 minuti: scegli subito giorno e orario.<br><br>'
+        + '<a class="btn-rosso" href="' + linkCall + '" target="_blank" rel="noopener" '
+        + 'style="display:inline-block;text-decoration:none;padding:12px 20px;color:#fff">Prenota la call →</a><br><br>'
+        + '<span style="font-weight:400;font-size:14px">Ti abbiamo inviato anche un\'email di riepilogo: '
+        + 'se non la trovi, controlla la cartella spam o promozioni.</span>';
       esito.classList.add('ok');
     }).catch(function(err){
       var msg = 'Non siamo riusciti a inviare il modulo. Riprova tra qualche minuto oppure scrivici a info@toucheconsulting.it.';
